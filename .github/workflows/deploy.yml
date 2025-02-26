@@ -1,0 +1,28 @@
+name: Deploy Streamlit App
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Remove Old Docker Images
+        run: |
+          docker rmi -f $(docker images -q) || true
+
+      - name: Build and Run New Docker Container
+        run: |
+          docker build --no-cache -t streamlit-visualizer:latest .
+          docker stop visualizer || true
+          docker rm visualizer || true
+          docker run -d -p 8501:8501 --name visualizer streamlit-visualizer:latest
+
+      - name: Verify Running Containers
+        run: docker ps -a
