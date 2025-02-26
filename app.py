@@ -4,7 +4,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 # Streamlit App UI
-st.title("📊 Simple Data Visuaizer")
+st.title("📊 Simple Data Visuagoitzer")
 st.write("Upload a CSV file to visualize its data.")
 
 # File uploader
